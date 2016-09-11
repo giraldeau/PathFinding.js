@@ -66,6 +66,7 @@ AStarFinderEv.prototype.findPath = function(startX, startY, endX, endY, grid) {
     // set the `g` and `f` value of the start node to be 0
     startNode.g = 0;
     startNode.f = 0;
+    startNode.remRange = 10;
 
     // push the start node into the open list
     openList.push(startNode);
@@ -96,7 +97,12 @@ AStarFinderEv.prototype.findPath = function(startX, startY, endX, endY, grid) {
 
             // get the distance between current node and the neighbor
             // and calculate the next g score
-            ng = node.g + ((x - node.x === 0 || y - node.y === 0) ? 1 : SQRT2);
+            var dist = ((x - node.x === 0 || y - node.y === 0) ? 1 : SQRT2);
+            if (node.remRange < dist) {
+                console.log("not enough range to go to node " + x + "," + y);
+                continue;
+            }
+            ng = node.g + dist;
 
             // check if the neighbor has not been inspected yet, or
             // can be reached with smaller cost from the current node
@@ -104,6 +110,7 @@ AStarFinderEv.prototype.findPath = function(startX, startY, endX, endY, grid) {
                 neighbor.g = ng;
                 neighbor.h = neighbor.h || weight * heuristic(abs(x - endX), abs(y - endY));
                 neighbor.f = neighbor.g + neighbor.h;
+                neighbor.remRange = node.remRange - dist;
                 neighbor.parent = node;
 
                 if (!neighbor.opened) {
