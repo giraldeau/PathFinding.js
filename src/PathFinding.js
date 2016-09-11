@@ -6,7 +6,7 @@ module.exports = {
     'DiagonalMovement'          : require('./core/DiagonalMovement'),
     'Heuristic'                 : require('./core/Heuristic'),
     'AStarFinder'               : require('./finders/AStarFinder'),
-    'BestFirstFinder'           : require('./finders/BestFirstFinder'),
+    'AStarFinderEv'             : require('./finders/AStarFinderEv'),
     'BreadthFirstFinder'        : require('./finders/BreadthFirstFinder'),
     'DijkstraFinder'            : require('./finders/DijkstraFinder'),
     'BiAStarFinder'             : require('./finders/BiAStarFinder'),

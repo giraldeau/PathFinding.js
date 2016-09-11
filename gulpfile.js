@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     concat = require('gulp-concat'),
     mocha = require('gulp-mocha'),
+    debug = require('gulp-debug'),
     shell = require('shelljs'),
     del = require('del'),
     jshint = require('gulp-jshint'),
@@ -55,6 +56,12 @@ gulp.task('lint', function() {
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('visual', ['uglify'], function() {
+   gulp.src('lib/pathfinding-browser.min.js', {base: 'lib'})
+       .pipe(debug())
+       .pipe(gulp.dest('visual/lib/'));
 });
 
 gulp.task('release', ['compile'], function(cb) {

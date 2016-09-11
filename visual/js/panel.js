@@ -34,6 +34,25 @@ var Panel = {
         
         switch (selected_header) {
 
+        case 'astarev_header':
+            allowDiagonal = typeof $('#astarev_section ' +
+                    '.allow_diagonal:checked').val() !== 'undefined';
+            dontCrossCorners = typeof $('#astarev_section ' +
+                    '.dont_cross_corners:checked').val() !=='undefined';
+
+            /* parseInt returns NaN (which is falsy) if the string can't be parsed */
+            weight = parseInt($('#astarev_section .spinner').val()) || 1;
+            weight = weight >= 1 ? weight : 1; /* if negative or 0, use 1 */
+
+            heuristic = $('input[name=astarev_heuristic]:checked').val();
+            finder = new PF.AStarFinderEv({
+                allowDiagonal: allowDiagonal,
+                dontCrossCorners: dontCrossCorners,
+                heuristic: PF.Heuristic[heuristic],
+                weight: weight
+            });
+            break;
+
         case 'astar_header':
             allowDiagonal = typeof $('#astar_section ' +
                                      '.allow_diagonal:checked').val() !== 'undefined';
