@@ -9,7 +9,7 @@ var DiagonalMovement = require('../core/DiagonalMovement');
  * @param {Object} opt
  * @param {boolean} opt.allowDiagonal Whether diagonal movement is allowed.
  *     Deprecated, use diagonalMovement instead.
- * @param {boolean} opt.dontCrossCorners Disallow diagonal movement touching 
+ * @param {boolean} opt.dontCrossCorners Disallow diagonal movement touching
  *     block corners. Deprecated, use diagonalMovement instead.
  * @param {DiagonalMovement} opt.diagonalMovement Allowed diagonal movement.
  * @param {function} opt.heuristic Heuristic function to estimate the distance
@@ -64,9 +64,10 @@ AStarFinderEv.prototype.findPath = function(startX, startY, endX, endY, grid) {
         node, neighbors, neighbor, i, l, x, y, ng;
 
     // set the `g` and `f` value of the start node to be 0
+    var nominalRange = 8;
     startNode.g = 0;
     startNode.f = 0;
-    startNode.remRange = 10;
+    startNode.remRange = nominalRange;
 
     // push the start node into the open list
     openList.push(startNode);
@@ -112,6 +113,11 @@ AStarFinderEv.prototype.findPath = function(startX, startY, endX, endY, grid) {
                 neighbor.f = neighbor.g + neighbor.h;
                 neighbor.remRange = node.remRange - dist;
                 neighbor.parent = node;
+
+                if (neighbor.charger) {
+                    console.log('reset range');
+                    neighbor.remRange = nominalRange;
+                }
 
                 if (!neighbor.opened) {
                     openList.push(neighbor);

@@ -72,6 +72,7 @@ Grid.prototype._buildNodes = function(width, height, matrix) {
                 // 0, false, null will be walkable
                 // while others will be un-walkable
                 nodes[i][j].walkable = false;
+                nodes[i][j].charger = false;
             }
         }
     }
@@ -122,6 +123,11 @@ Grid.prototype.setWalkableAt = function(x, y, walkable) {
     this.nodes[y][x].walkable = walkable;
 };
 
+Grid.prototype.setChargerAt = function(x, y, charger) {
+    console.log("setChargerAt" + x + "," + y);
+    this.nodes[y][x].walkable = true;
+    this.nodes[y][x].charger = charger;
+};
 
 /**
  * Get the neighbors of the given node.
@@ -233,7 +239,7 @@ Grid.prototype.clone = function() {
     for (i = 0; i < height; ++i) {
         newNodes[i] = new Array(width);
         for (j = 0; j < width; ++j) {
-            newNodes[i][j] = new Node(j, i, thisNodes[i][j].walkable);
+            newNodes[i][j] = new Node(j, i, thisNodes[i][j].walkable, thisNodes[i][j].charger);
         }
     }
 

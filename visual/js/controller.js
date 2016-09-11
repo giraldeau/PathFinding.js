@@ -102,6 +102,7 @@ $.extend(Controller, {
             numRows = this.gridSize[1];
 
         this.grid = new PF.Grid(numCols, numRows);
+        this.currentComponent = 'charger';
 
         View.init({
             numCols: numCols,
@@ -425,6 +426,7 @@ $.extend(Controller, {
             }
             break;
         case 'drawingWall':
+
             this.setWalkableAt(gridX, gridY, false);
             break;
         case 'erasingWall':
@@ -492,8 +494,14 @@ $.extend(Controller, {
         View.setEndPos(gridX, gridY);
     },
     setWalkableAt: function(gridX, gridY, walkable) {
-        this.grid.setWalkableAt(gridX, gridY, walkable);
-        View.setAttributeAt(gridX, gridY, 'walkable', walkable);
+        if (this.currentComponent === 'wall') {
+            this.grid.setWalkableAt(gridX, gridY, walkable);
+            View.setAttributeAt(gridX, gridY, 'walkable', walkable);
+        } else if (this.currentComponent === 'charger') {
+            this.grid.setChargerAt(gridX, gridY, true);
+            View.setAttributeAt(gridX, gridY, 'charger', true);
+            console.log('hello' + gridX + ',' + gridY);
+        }
     },
     isStartPos: function(gridX, gridY) {
         return gridX === this.startX && gridY === this.startY;

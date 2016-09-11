@@ -37,6 +37,10 @@ var View = {
             fill: '#e5e5e5',
             'stroke-opacity': 0.2,
         },
+        charger: {
+            fill: '#005fff',
+            'stroke-opacity': 0.2,
+        },
     },
     nodeColorizeEffect: {
         duration: 50,
@@ -151,7 +155,7 @@ var View = {
         switch (attr) {
         case 'walkable':
             color = value ? nodeStyle.normal.fill : nodeStyle.blocked.fill;
-            this.setWalkableAt(gridX, gridY, value);
+            this.setWalkableAt(gridX, gridY, value, color);
             break;
         case 'opened':
             this.colorizeNode(this.rects[gridY][gridX], nodeStyle.opened.fill);
@@ -166,6 +170,11 @@ var View = {
 
             this.colorizeNode(this.rects[gridY][gridX], color);
             this.setCoordDirty(gridX, gridY, true);
+            break;
+        case 'charger':
+            color = (value === true) ? nodeStyle.charger.fill : nodeStyle.normal.fill;
+
+            this.setWalkableAt(gridX, gridY, false, color);
             break;
         case 'parent':
             // XXX: Maybe draw a line from this node to its parent?
@@ -188,7 +197,7 @@ var View = {
             transform: this.nodeZoomEffect.transformBack,
         }, this.nodeZoomEffect.duration);
     },
-    setWalkableAt: function(gridX, gridY, value) {
+    setWalkableAt: function(gridX, gridY, value, fillStyle) {
         var node, i, blockedNodes = this.blockedNodes;
         if (!blockedNodes) {
             blockedNodes = this.blockedNodes = new Array(this.numRows);
@@ -213,7 +222,7 @@ var View = {
                 return;
             }
             node = blockedNodes[gridY][gridX] = this.rects[gridY][gridX].clone();
-            this.colorizeNode(node, this.nodeStyle.blocked.fill);
+            this.colorizeNode(node, fillStyle);
             this.zoomNode(node);
         }
     },

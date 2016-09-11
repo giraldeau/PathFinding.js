@@ -58,8 +58,8 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('visual', ['uglify'], function() {
-   gulp.src('lib/pathfinding-browser.min.js', {base: 'lib'})
+gulp.task('visual', ['scripts'], function() {
+   gulp.src('lib/pathfinding-browser.js', {base: 'lib'})
        .pipe(debug())
        .pipe(gulp.dest('visual/lib/'));
 });

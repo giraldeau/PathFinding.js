@@ -20,7 +20,7 @@
     <script type="text/javascript" src="./lib/ui/jquery.ui.accordion.min.js"></script>
     <script type="text/javascript" src="./lib/ui/jquery.ui.slider.min.js"></script>
 
-    <script type="text/javascript" src="./lib/pathfinding-browser.min.js"></script>
+    <script type="text/javascript" src="./lib/pathfinding-browser.js"></script>
 
     <script type="text/javascript" src="./js/view.js"></script>
     <script type="text/javascript" src="./js/controller.js"></script>
@@ -73,6 +73,16 @@
             <input class="spinner" name="astarev_weight" value="1">
             <label class="option_label">Weight</label> <br>
           </div>
+          <header class="option_header">
+            <h3>Components</h3>
+          </header>
+          <div class="component sub_options">
+            <input type="radio" name="component" value="wall">
+            <label class="option_label">Wall</label> <br>
+            <input type="radio" name="component" value="charger">
+            <label class="option_label">Charger</label> <br>
+          </div>
+
         </div>
         <h3 id="astar_header"><a href="#">A*</a></h3>
         <div id="astar_section" class="finder_section">
